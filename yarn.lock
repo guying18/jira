@@ -2032,6 +2032,11 @@
   "resolved" "https://registry.npmjs.org/@types/q/-/q-1.5.4.tgz"
   "version" "1.5.4"
 
+"@types/qs@^6.9.7":
+  "integrity" "sha1-Y7t9Bn2xB8weRXwwO8JdUR/r9ss="
+  "resolved" "https://registry.npmmirror.com/@types/qs/download/@types/qs-6.9.7.tgz?cache=0&sync_timestamp=1637271732530&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fqs%2Fdownload%2F%40types%2Fqs-6.9.7.tgz"
+  "version" "6.9.7"
+
 "@types/react-dom@^17.0.0":
   "integrity" "sha1-4ercPF6GvbX3aE4AJ0riKOe8xGY="
   "resolved" "https://registry.npmmirror.com/@types/react-dom/download/@types/react-dom-17.0.11.tgz"

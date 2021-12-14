@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
 
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? true : !!value);
 
 // 在一个函数里，改变传入的对象本身是不好的
-export const cleanObject = (obj) => {
+export const cleanObject = (obj: object) => {
   // 相当于 Object.assign({}, obj)
   const res = { ...obj };
   Object.keys(res).forEach((key) => {
     const value = res[key];
-    if (isFalsy(value)) {
+    if (!isFalsy(value)) {
       delete res[key];
     }
   });
   return res;
 };
 
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
 // 防抖
-export const useDebounce = (value, delay) => {
+// delay?: number 其中 "?" 表示此参数要么不传，要么传入 number
+export const useDebounce = <T>(value: T, delay?: number): T => {
   // 定义内部变量
   const [debounceValue, setDebounceValue] = useState(value);
 
