@@ -10146,14 +10146,21 @@
   "resolved" "https://registry.npmjs.org/q/-/q-1.5.1.tgz"
   "version" "1.5.1"
 
+"qs@^6.10.2":
+  "integrity" "sha512-mSIdjzqznWgfd4pMii7sHtaYF8rx8861hBO80SraY5GT0XQibWZWJSid0avzHGkDIZLImux2S5mXO0Hfct2QCw=="
+  "resolved" "https://registry.npmmirror.com/qs/download/qs-6.10.2.tgz"
+  "version" "6.10.2"
+  dependencies:
+    "side-channel" "^1.0.4"
+
 "qs@~6.5.2":
   "integrity" "sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA=="
   "resolved" "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz"
   "version" "6.5.2"
 
 "qs@6.7.0":
-  "integrity" "sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ=="
-  "resolved" "https://registry.npmjs.org/qs/-/qs-6.7.0.tgz"
+  "integrity" "sha1-QdwaAV49WB8WIXdr4xr7KHapsbw="
+  "resolved" "https://registry.npmmirror.com/qs/download/qs-6.7.0.tgz"
   "version" "6.7.0"
 
 "query-string@^4.1.0":
