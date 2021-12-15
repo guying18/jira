@@ -5,7 +5,7 @@ export const isFalsy = (value: unknown) => (value === 0 ? true : !!value);
 // 在一个函数里，改变传入的对象本身是不好的
 export const cleanObject = (obj: object) => {
   // 相当于 Object.assign({}, obj)
-  const res = { ...obj };
+  const res: any = { ...obj };
   Object.keys(res).forEach((key) => {
     const value = res[key];
     if (!isFalsy(value)) {
@@ -37,4 +37,23 @@ export const useDebounce = <T>(value: T, delay?: number): T => {
   }, [value, delay]);
 
   return debounceValue;
+};
+
+export const useArray = <T>(initialArray: T[]) => {
+  const [value, setValue] = useState(initialArray);
+  return {
+    value,
+    setValue,
+    add: (item: T) => {
+      setValue([...value, item]);
+    },
+    removeIndex: (index: number) => {
+      const copy = [...value];
+      copy.splice(index, 1);
+      setValue(copy);
+    },
+    clear: () => {
+      setValue([]);
+    },
+  };
 };
