@@ -16,6 +16,7 @@ export const ProjectListScreen = () => {
   });
   const debouncedParam = useDebounce(param, 200);
   const [list, setList] = useState([]);
+
   const client = useHttp();
 
   useEffect(() => {

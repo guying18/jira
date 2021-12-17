@@ -61,7 +61,8 @@ export const http = async (
 // 定义 useHttp Hook, 返回一个函数，自动传入 token
 export const useHttp = () => {
   const { user } = useAuth();
-  //
+  // 采用 Parameters<typeof http> 定义参数 [endpoint, config] 这个 tuple 的类型，
+  // 其中 typeof http 获取 http 函数的参数类型
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token });
 };

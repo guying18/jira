@@ -9,6 +9,7 @@ interface AuthForm {
   password: string;
 }
 
+// 初始化用户信息
 const bootstrapUser = async () => {
   let user = null;
   const token = auth.getToken();
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
+  // 初始化用户信息，刷新保持登陆状态
   useMount(() => {
     bootstrapUser().then(setUser);
   });
