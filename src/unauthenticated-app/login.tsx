@@ -1,5 +1,6 @@
 import { useAuth } from "context/auth-context";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
+import { LongButton } from "unauthenticated-app";
 
 export const LoginScreen = () => {
   const { login } = useAuth();
@@ -30,9 +31,9 @@ export const LoginScreen = () => {
         {/* Button API: */}
         {/* htmlType:	设置 button 原生的 type 值，可选值请参考 HTML 标准 */}
         {/* type:	设置按钮类型	primary | ghost | dashed | link | text | default */}
-        <Button htmlType={"submit"} type={"primary"}>
+        <LongButton htmlType={"submit"} type={"primary"}>
           登陆
-        </Button>
+        </LongButton>
       </Form.Item>
     </Form>
   );
