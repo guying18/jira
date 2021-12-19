@@ -1,4 +1,4 @@
-import { Button, Card, Divider, Table } from "antd";
+import { Button, Card, Divider } from "antd";
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { LoginScreen } from "./login";
