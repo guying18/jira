@@ -21,6 +21,7 @@ export const List = ({ list, users }: ListProps) => {
   // dataSource:	数据数组
   return (
     <Table
+      rowKey={"id"}
       pagination={false}
       columns={[
         {
