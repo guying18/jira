@@ -20,7 +20,7 @@ export const RegisterScreen = ({
     cpassword: string;
   }) => {
     if (cpassword !== values.password) {
-      onError(new Error("请确认两次输入的密码相同！"));
+      onError(new Error("请确认两次输入的密码相同"));
       return;
     }
     try {
