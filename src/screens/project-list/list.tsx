@@ -1,8 +1,8 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { User } from "./search-panel";
 
-interface Project {
+export interface Project {
   id: string;
   name: string;
   personId: string;
@@ -10,11 +10,10 @@ interface Project {
   organization: string;
   created: number;
 }
-interface ListProps {
-  list: Project[];
+interface ListProps extends TableProps<Project> {
   users: User[];
 }
-export const List = ({ list, users }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   // Table API:
   // pagination:	分页器，设为 false 时不展示和进行分页
   // columns:	表格列的配置描述，ColumnsType[]
@@ -61,7 +60,7 @@ export const List = ({ list, users }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { Button, Card, Divider } from "antd";
+import { Button, Card, Divider, Typography } from "antd";
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { LoginScreen } from "./login";
@@ -10,13 +10,22 @@ import right from "assets/right.svg";
 export const UnauthenticatedApp = () => {
   // isRegister 为 true 时，表示当前页面是注册页
   const [isRegister, setIsRegister] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
   return (
     <Container>
       <Header />
       <Background />
       <ShadowCard>
         <Title>{isRegister ? "请注册" : "请登陆"}</Title>
-        {isRegister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? (
+          <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+        ) : null}
+        {isRegister ? (
+          <RegisterScreen onError={setError} />
+        ) : (
+          <LoginScreen onError={setError} />
+        )}
         {/* antd Divider: 区隔内容的分割线。 */}
         <Divider />
         <Button type={"link"} onClick={() => setIsRegister(!isRegister)}>
