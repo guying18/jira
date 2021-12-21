@@ -1,7 +1,9 @@
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { User } from "./search-panel";
+import { Link } from "react-router-dom";
 
+// TODO: 把所有 ID 都改成 number 类型
 export interface Project {
   id: string;
   name: string;
@@ -26,13 +28,15 @@ export const List = ({ users, ...props }: ListProps) => {
         {
           // title:	列头显示文字
           title: "名称",
-          // dataIndex:	列数据在数据项中对应的路径，支持通过数组查询嵌套路径
-          dataIndex: "name",
           // sorter: 排序函数，本地排序使用一个函数(参考 Array.sort 的 compareFunction)，需要服务端排序可设为 true
           sorter: (a, b) => a.name.localeCompare(b.name),
+          render(value, project) {
+            return <Link to={String(project.id)}>{project.name}</Link>;
+          },
         },
         {
           title: "部门",
+          // dataIndex:	列数据在数据项中对应的路径，支持通过数组查询嵌套路径
           dataIndex: "organization",
         },
         {
