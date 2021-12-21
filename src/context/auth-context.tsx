@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   if (isError) {
     return <FullPageErrorFallback error={error} />;
   }
+
   return (
     <AuthContext.Provider
       children={children}
