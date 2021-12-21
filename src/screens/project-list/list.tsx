@@ -31,7 +31,9 @@ export const List = ({ users, ...props }: ListProps) => {
           // sorter: 排序函数，本地排序使用一个函数(参考 Array.sort 的 compareFunction)，需要服务端排序可设为 true
           sorter: (a, b) => a.name.localeCompare(b.name),
           render(value, project) {
-            return <Link to={String(project.id)}>{project.name}</Link>;
+            return (
+              <Link to={`projects/${String(project.id)}`}>{project.name}</Link>
+            );
           },
         },
         {

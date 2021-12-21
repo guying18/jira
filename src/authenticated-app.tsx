@@ -4,7 +4,7 @@ import { useAuth } from "context/auth-context";
 import { ProjectListScreen } from "screens/project-list";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
-import { useDocumentTitle } from "utils";
+import { resetRoute, useDocumentTitle } from "utils";
 import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
@@ -34,6 +34,8 @@ export const AuthenticatedApp = () => {
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
+            {/* 默认路由 */}
+            <Route index element={<ProjectListScreen />} />
           </Routes>
         </Router>
       </Main>
@@ -46,7 +48,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        <Button type={"link"} onClick={resetRoute}>
+          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        </Button>
         <h2>项目</h2>
         <h2>用户</h2>
       </HeaderLeft>
