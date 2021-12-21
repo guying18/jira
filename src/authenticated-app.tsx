@@ -4,6 +4,7 @@ import { useAuth } from "context/auth-context";
 import { ProjectListScreen } from "screens/project-list";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
+import { useDocumentTitle } from "utils";
 
 /**
  * grid 和 flex 各自的应用场景
@@ -18,6 +19,9 @@ import { Button, Dropdown, Menu } from "antd";
 
 export const AuthenticatedApp = () => {
   const { user, logout } = useAuth();
+
+  useDocumentTitle("项目列表", false);
+
   return (
     <Container>
       <Header between={true}>
