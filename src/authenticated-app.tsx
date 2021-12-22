@@ -4,7 +4,7 @@ import { useAuth } from "context/auth-context";
 import { ProjectListScreen } from "screens/project-list";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
-import { resetRoute, useDocumentTitle } from "utils";
+import { resetRoute } from "utils";
 import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
@@ -21,8 +21,6 @@ import { ProjectScreen } from "screens/project";
  */
 
 export const AuthenticatedApp = () => {
-  useDocumentTitle("项目列表", false);
-
   return (
     <Container>
       <PageHeader />
