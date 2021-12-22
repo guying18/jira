@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import * as auth from "auth-provider";
 import { User } from "screens/project-list/search-panel";
 import { http } from "utils/http";
@@ -52,9 +52,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => auth.logout().then(() => setUser(null));
 
   // 初始化用户信息，刷新保持登陆状态
-  useMount(() => {
-    run(bootstrapUser());
-  });
+  useMount(
+    useCallback(() => {
+      run(bootstrapUser());
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+  );
 
   if (isIdle || isLoading) {
     return <FullPageLoading />;
