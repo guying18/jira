@@ -8,8 +8,10 @@ export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
   const { run, ...result } = useAsync<Project[]>();
 
+  const fetchProjects = () =>
+    client("projects", { data: cleanObject(param || {}) });
   useEffect(() => {
-    run(client("projects", { data: cleanObject(param || {}) }));
+    run(fetchProjects(), { retry: fetchProjects });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
 
@@ -22,7 +24,7 @@ export const useEditProject = () => {
   // Hook 使用规则1：只在最顶层使用 Hook，不要在循环，条件或嵌套函数中调用 Hook
   // 处理pin值改变的函数 需要在return的标签中提交fetch请求来修改数据库，因此需要返回一个普通函数来处理
   const mutate = (params: Partial<Project>) => {
-    run(
+    return run(
       client(`projects/${params.id}`, {
         data: params,
         method: "PATCH",
@@ -41,7 +43,7 @@ export const useAddProject = () => {
   const { run, ...asyncResult } = useAsync<Project[]>();
 
   const mutate = (params: Partial<Project>) => {
-    run(
+    return run(
       client(`projects/${params.id}`, {
         data: params,
         method: "POST",

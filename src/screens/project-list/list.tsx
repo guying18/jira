@@ -16,11 +16,13 @@ export interface Project {
 }
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // 柯里化（Currying）: 是将具有多个参数的函数转换为一个单参数的函数链的过程。
-  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(props.refresh);
   // Table API:
   // pagination:	分页器，设为 false 时不展示和进行分页
   // columns:	表格列的配置描述，ColumnsType[]
