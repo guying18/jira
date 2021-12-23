@@ -2,6 +2,8 @@ import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import { User } from "./search-panel";
 import { Link } from "react-router-dom";
+import { Pin } from "components/pin";
+import { useEditProject } from "utils/project";
 
 // TODO: 把所有 ID 都改成 number 类型
 export interface Project {
@@ -16,6 +18,9 @@ interface ListProps extends TableProps<Project> {
   users: User[];
 }
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  // 柯里化（Currying）: 是将具有多个参数的函数转换为一个单参数的函数链的过程。
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   // Table API:
   // pagination:	分页器，设为 false 时不展示和进行分页
   // columns:	表格列的配置描述，ColumnsType[]
@@ -25,6 +30,17 @@ export const List = ({ users, ...props }: ListProps) => {
       rowKey={"id"}
       pagination={false}
       columns={[
+        {
+          title: <Pin checked={true} disabled={true} />,
+          render(value, project) {
+            return (
+              <Pin
+                checked={project.pin}
+                onCheckedChange={pinProject(project.id)}
+              />
+            );
+          },
+        },
         {
           // title:	列头显示文字
           title: "名称",
