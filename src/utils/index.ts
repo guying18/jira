@@ -84,3 +84,21 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
 
 // 重置路由并刷新页面
 export const resetRoute = () => (window.location.href = window.location.origin);
+
+/**
+ * 返回组件的挂载状态，如果还没挂载或者已经卸载，返回 false；反之返回 true
+ */
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+
+  // useEffect 初次调用是在 页面被加载完成后
+  useEffect(() => {
+    mountedRef.current = true;
+    // return 被卸载时
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+
+  return mountedRef;
+};
