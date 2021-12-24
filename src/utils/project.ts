@@ -15,8 +15,7 @@ export const useProjects = (param?: Partial<Project>) => {
 
   useEffect(() => {
     run(fetchProjects(), { retry: fetchProjects });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param]);
+  }, [fetchProjects, param, run]);
 
   return result;
 };
