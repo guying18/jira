@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
+import { projectListActions } from "./project-list.slice";
+import { useDispatch } from "react-redux";
 
 // TODO: 把所有 ID 都改成 number 类型
 export interface Project {
@@ -18,9 +20,9 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element;
 }
 export const List = ({ users, ...props }: ListProps) => {
+  const dispatch = useDispatch();
   const { mutate } = useEditProject();
   // 柯里化（Currying）: 是将具有多个参数的函数转换为一个单参数的函数链的过程。
   const pinProject = (id: number) => (pin: boolean) =>
@@ -91,7 +93,16 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>{props.projectButton}</Menu.Item>
+                    <Menu.Item key={"edit"}>
+                      <ButtonNoPadding
+                        type={"link"}
+                        onClick={() =>
+                          dispatch(projectListActions.openProjectModal())
+                        }
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
                   </Menu>
                 }
               >
