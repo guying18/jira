@@ -13,10 +13,10 @@ export const projectListSlice = createSlice({
   name: "projectListSlice",
   initialState,
   reducers: {
-    openProjectModal: (state) => {
+    openProjectModal(state) {
       state.projectModalOpen = true;
     },
-    closeProjectModal: (state) => {
+    closeProjectModal(state) {
       state.projectModalOpen = false;
     },
   },
