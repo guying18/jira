@@ -1,7 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import { Project } from "screens/project-list/list";
-import { useProjectSearchParams } from "screens/project-list/util";
 import { useHttp } from "./http";
+import {
+  useAddConfig,
+  useEditConfig,
+  useDeleteConfig,
+} from "./ues-optimistic-options";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
@@ -14,12 +18,8 @@ export const useProjects = (param?: Partial<Project>) => {
   );
 };
 
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
-  const [searchParams] = useProjectSearchParams();
-  const queryKey = ["projects", searchParams];
-
   // 修改：useMutation(mutationFn, { onSuccess })
   // mutationFn：执行异步任务并返回 promise 的函数。
   // invalidateQueries 方法可用于根据查询键使缓存中的单个或多个查询无效，并重新获取。
@@ -29,35 +29,12 @@ export const useEditProject = () => {
         data: params,
         method: "PATCH",
       }),
-    {
-      onSuccess: () => queryClient.invalidateQueries(queryKey),
-      // 使用 react-query 实现乐观更新(Optimistic Updates)
-      // Mutation 一发生，onMutate 就被调用.
-      async onMutate(target) {
-        const previousItems = queryClient.getQueryData(queryKey);
-        queryClient.setQueryData(queryKey, (old?: Project[]) => {
-          return (
-            old?.map((project) =>
-              project.id === target.id ? { ...project, ...target } : project
-            ) || []
-          );
-        });
-        return { previousItems };
-      },
-      // Mutation 请求出错时，调用 onError 回滚
-      onError(error, newItem, context) {
-        queryClient.setQueryData(
-          "todos",
-          (context as { previousItems: Project[] }).previousItems
-        );
-      },
-    }
+    useEditConfig(queryKey)
   );
 };
 
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -65,9 +42,19 @@ export const useAddProject = () => {
         data: params,
         method: "POST",
       }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-    }
+    useAddConfig(queryKey)
+  );
+};
+
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const client = useHttp();
+
+  return useMutation(
+    ({ id }: { id: number }) =>
+      client(`projects/${id}`, {
+        method: "DELETE",
+      }),
+    useDeleteConfig(queryKey)
   );
 };
 
