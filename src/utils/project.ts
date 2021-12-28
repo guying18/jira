@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "screens/project-list/list";
+import { useProjectSearchParams } from "screens/project-list/util";
 import { useHttp } from "./http";
 
 export const useProjects = (param?: Partial<Project>) => {
@@ -16,6 +17,8 @@ export const useProjects = (param?: Partial<Project>) => {
 export const useEditProject = () => {
   const client = useHttp();
   const queryClient = useQueryClient();
+  const [searchParams] = useProjectSearchParams();
+  const queryKey = ["projects", searchParams];
 
   // 修改：useMutation(mutationFn, { onSuccess })
   // mutationFn：执行异步任务并返回 promise 的函数。
@@ -27,7 +30,27 @@ export const useEditProject = () => {
         method: "PATCH",
       }),
     {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+      // 使用 react-query 实现乐观更新(Optimistic Updates)
+      // Mutation 一发生，onMutate 就被调用.
+      async onMutate(target) {
+        const previousItems = queryClient.getQueryData(queryKey);
+        queryClient.setQueryData(queryKey, (old?: Project[]) => {
+          return (
+            old?.map((project) =>
+              project.id === target.id ? { ...project, ...target } : project
+            ) || []
+          );
+        });
+        return { previousItems };
+      },
+      // Mutation 请求出错时，调用 onError 回滚
+      onError(error, newItem, context) {
+        queryClient.setQueryData(
+          "todos",
+          (context as { previousItems: Project[] }).previousItems
+        );
+      },
     }
   );
 };
