@@ -1,4 +1,6 @@
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useProject } from "utils/project";
 import { useUrlQueryParam } from "utils/url";
 
 // 项目列表搜索的参数
@@ -20,15 +22,32 @@ export const useProjectModal = () => {
   const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
     "projectCreate",
   ]);
+  const [{ editingProjectId }, setEditingProjectId] = useUrlQueryParam([
+    "editingProjectId",
+  ]);
+  const [, setUrlParams] = useSearchParams();
+
+  const { data: editingProject, isLoading } = useProject(
+    Number(editingProjectId)
+  );
 
   const open = () => setProjectCreate({ projectCreate: true });
-  const close = () => setProjectCreate({ projectCreate: undefined });
+  const close = () => {
+    setUrlParams({ projectCreate: "", editingProjectId: "" });
+    // setProjectCreate({ projectCreate: '' });
+    // setEditingProjectId({ editingProjectId: '' })
+  };
+  const startEdit = (id: number) =>
+    setEditingProjectId({ editingProjectId: id });
 
   // 返回对象，在组件中使用时，则需使用 {data: user} 的形式重命名，但调用顺序不重要，建议返回多个数据时使用。
   return {
     // 从 URL 获取的数据均为 string
-    projectModalOpen: projectCreate === "true",
+    projectModalOpen: projectCreate === "true" || Boolean(editingProject),
     open,
     close,
+    startEdit,
+    editingProject,
+    isLoading,
   };
 };
