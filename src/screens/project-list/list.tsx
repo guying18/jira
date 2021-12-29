@@ -1,21 +1,13 @@
 import { Dropdown, Menu, Table, TableProps, Modal } from "antd";
 import dayjs from "dayjs";
-import { User } from "./search-panel";
+import { User } from "types/user";
 import { Link } from "react-router-dom";
 import { Pin } from "components/pin";
 import { useDeleteProject, useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
 import { useProjectModal, useProjectsQueryKey } from "./util";
+import { Project } from "types/project";
 
-// TODO: 把所有 ID 都改成 number 类型
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
 interface ListProps extends TableProps<Project> {
   users: User[];
 }
