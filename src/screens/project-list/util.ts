@@ -47,7 +47,7 @@ export const useProjectModal = () => {
   // 返回对象，在组件中使用时，则需使用 {data: user} 的形式重命名，但调用顺序不重要，建议返回多个数据时使用。
   return {
     // 从 URL 获取的数据均为 string
-    projectModalOpen: projectCreate === "true" || Boolean(editingProject),
+    projectModalOpen: projectCreate === "true" || Boolean(editingProjectId),
     open,
     close,
     startEdit,

@@ -26,6 +26,10 @@ export const ProjectModal = () => {
     });
   };
 
+  const closeModal = () => {
+    form.resetFields();
+    close();
+  };
   const title = editingProject ? "编辑项目" : "创建项目";
 
   // 当操作是'编辑项目'时，首次渲染页面时需要将 editingProject 的数据填入表单中
@@ -40,7 +44,7 @@ export const ProjectModal = () => {
     // forceRender: 强制渲染
     <Drawer
       forceRender={true}
-      onClose={close}
+      onClose={closeModal}
       visible={projectModalOpen}
       width={"100%"}
     >
