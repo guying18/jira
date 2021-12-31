@@ -2,12 +2,14 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { Task } from "types/task";
 import { useHttp } from "./http";
 import { useAddConfig, useEditConfig } from "./ues-optimistic-options";
+import { useDebounce } from "utils/index";
 
 export const useTasks = (param?: Partial<Task>) => {
   const client = useHttp();
+  const debouncedParam = { ...param, name: useDebounce(param?.name, 200) };
 
-  return useQuery<Task[], Error>(["tasks", param], () =>
-    client("tasks", { data: param })
+  return useQuery<Task[], Error>(["tasks", debouncedParam], () =>
+    client("tasks", { data: debouncedParam })
   );
 };
 
