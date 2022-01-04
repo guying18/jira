@@ -1,14 +1,16 @@
 import { Kanban } from "types/kanban";
 import { useTasks } from "utils/task";
-import { useTasksModal, useTasksSearchParams } from "./util";
+import { useKanbanQueryKey, useTasksModal, useTasksSearchParams } from "./util";
 import taskIcon from "assets/task.svg";
 import bugIcon from "assets/bug.svg";
 import { useTaskTypes } from "utils/task-type";
 import styled from "@emotion/styled";
-import { Card } from "antd";
+import { Button, Card, Dropdown, Menu, Modal } from "antd";
 import { CreateTask } from "./create-task";
 import { Task } from "types/task";
 import { Mark } from "components/mark";
+import { useDeleteKanban } from "utils/kanban";
+import { Row } from "components/lib";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes();
@@ -28,9 +30,40 @@ const TaskCard = ({ task }: { task: Task }) => {
       style={{ marginBottom: "0.5rem", cursor: "pointer" }}
       key={task.id}
     >
-      <Mark name={task.name} keyword={keyword} />
+      <p>
+        <Mark name={task.name} keyword={keyword} />
+      </p>
       <TaskTypeIcon id={task.typeId} />
     </Card>
+  );
+};
+
+const More = ({ kanban }: { kanban: Kanban }) => {
+  const { mutateAsync } = useDeleteKanban(useKanbanQueryKey());
+  const startEdit = () => {
+    Modal.confirm({
+      okText: "确定",
+      cancelText: "取消",
+      title: "确定删除看板吗",
+      onOk() {
+        return mutateAsync({ id: kanban.id });
+      },
+    });
+  };
+  const overlay = (
+    <Menu>
+      <Menu.Item key={"delete"}>
+        <Button type={"link"} onClick={startEdit}>
+          删除
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <Dropdown overlay={overlay}>
+      <Button type={"link"}>...</Button>
+    </Dropdown>
   );
 };
 
@@ -40,7 +73,10 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
 
   return (
     <Container>
-      <h3>{kanban.name}</h3>
+      <Row between={true}>
+        <h3>{kanban.name}</h3>
+        <More kanban={kanban} />
+      </Row>
       <TasksContainer>
         {tasks?.map((task) => (
           <TaskCard task={task} key={task.id} />
