@@ -5,7 +5,7 @@ import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
-  useReorderConfig,
+  useReorderTaskConfig,
 } from "./ues-optimistic-options";
 import { useDebounce } from "utils/index";
 import { SortProps } from "./kanban";
@@ -76,6 +76,6 @@ export const useReorderTask = (queryKey: QueryKey) => {
         data: params,
         method: "POST",
       }),
-    useReorderConfig(queryKey)
+    useReorderTaskConfig(queryKey)
   );
 };
