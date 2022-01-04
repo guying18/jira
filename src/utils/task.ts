@@ -5,8 +5,10 @@ import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
+  useReorderConfig,
 } from "./ues-optimistic-options";
 import { useDebounce } from "utils/index";
+import { SortProps } from "./kanban";
 
 export const useTasks = (param?: Partial<Task>) => {
   const client = useHttp();
@@ -62,5 +64,18 @@ export const useDeleteTask = (queryKey: QueryKey) => {
         method: "DELETE",
       }),
     useDeleteConfig(queryKey)
+  );
+};
+
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+
+  return useMutation(
+    (params: SortProps) =>
+      client(`tasks/reorder`, {
+        data: params,
+        method: "POST",
+      }),
+    useReorderConfig(queryKey)
   );
 };
