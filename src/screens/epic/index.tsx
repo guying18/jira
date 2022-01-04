@@ -19,7 +19,7 @@ export const EpicScreen = () => {
 
   const confirmDeleteEpic = (epic: Epic) => {
     Modal.confirm({
-      title: `确定删除项目组:${epic.name}`,
+      title: `确定删除任务组:${epic.name}`,
       content: "点击确定删除",
       okText: "确定",
       cancelText: "取消",
@@ -39,6 +39,7 @@ export const EpicScreen = () => {
       </Row>
 
       <List
+        style={{ overflow: "scroll" }}
         dataSource={epics}
         itemLayout={"vertical"}
         renderItem={(epic) => (

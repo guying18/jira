@@ -10,7 +10,7 @@ export const CreateTask = ({ kanbanId }: { kanbanId: number }) => {
   const { mutateAsync: addTask } = useAddTask(useTasksQueryKey());
 
   const submit = async () => {
-    await addTask({ name, projectId, kanbanId });
+    await addTask({ id: -1, name, projectId, kanbanId });
     setName("");
   };
 

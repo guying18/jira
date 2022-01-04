@@ -69,12 +69,15 @@ const More = ({ kanban }: { kanban: Kanban }) => {
   );
 };
 
+// let renderCnt = 0;
+
 export const KanbanColumn = React.forwardRef<
   HTMLDivElement,
   { kanban: Kanban }
 >(({ kanban, ...props }, ref) => {
   const { data: allTasks } = useTasks(useTasksSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
+  // renderCnt++;
 
   return (
     <Container {...props} ref={ref}>
@@ -89,17 +92,20 @@ export const KanbanColumn = React.forwardRef<
           droppableId={String(kanban.id)}
         >
           <DropChild style={{ minHeight: "5px" }}>
-            {tasks?.map((task, taskIndex) => (
-              <Drag
-                key={task.id}
-                index={taskIndex}
-                draggableId={"task" + task.id}
-              >
-                <div>
-                  <TaskCard task={task} key={task.id} />
-                </div>
-              </Drag>
-            ))}
+            {tasks?.map((task, taskIndex) => {
+              // console.log(`[KanbanColumn][${renderCnt}]taskId=${task.id}`);
+              return (
+                <Drag
+                  key={task.id}
+                  index={taskIndex}
+                  draggableId={"task" + task.id}
+                >
+                  <div>
+                    <TaskCard task={task} key={task.id} />
+                  </div>
+                </Drag>
+              );
+            })}
           </DropChild>
         </Drop>
         <CreateTask kanbanId={kanban.id} />

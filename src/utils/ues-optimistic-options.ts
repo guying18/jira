@@ -48,6 +48,8 @@ export const useReorderTaskConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => {
     const orderedList = reorder({ list: old, ...target }) as Task[];
     return orderedList.map((item) =>
-      item.id === target.fromId ? { ...item, kanbanId: target.kanbanId } : item
+      item.id === target.fromId
+        ? { ...item, kanbanId: target.toKanbanId }
+        : item
     );
   });

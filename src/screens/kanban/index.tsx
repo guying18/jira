@@ -84,7 +84,7 @@ export const useDragEnd = () => {
       }
       // 看板排序
       if (type === "COLUMN") {
-        // console.log('kanbans:', kanbans)
+        console.log("kanbans:", kanbans);
         const fromId = kanbans?.[source.index].id;
         const toId = kanbans?.[destination.index].id;
         if (!fromId || !toId || fromId === toId) {
@@ -94,7 +94,7 @@ export const useDragEnd = () => {
         reorderKanban({ fromId, referenceId: toId, type });
       }
       if (type === "ROW") {
-        // console.log('tasks:', allTasks)
+        console.log("tasks:", allTasks);
         const fromKanbanId = +source.droppableId;
         const toKanbanId = +destination.droppableId;
         const fromTask = allTasks.filter(
