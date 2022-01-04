@@ -37,5 +37,6 @@ export const ProjectListScreen = () => {
 ProjectListScreen.whyDidYouRender = false;
 
 const Container = styled.div`
+  flex-grow: 1;
   padding: 3.2rem;
 `;
