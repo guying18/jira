@@ -25,8 +25,7 @@ import { UserPopover } from "components/user-popover";
 
 // prop drilling
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
+export default function AuthenticatedApp() {
   return (
     <Container>
       <Router>
@@ -46,7 +45,7 @@ export default () => {
       </Router>
     </Container>
   );
-};
+}
 
 const PageHeader = () => {
   return (
