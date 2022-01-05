@@ -25,7 +25,8 @@ import { UserPopover } from "components/user-popover";
 
 // prop drilling
 
-export const AuthenticatedApp = () => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => {
   return (
     <Container>
       <Router>

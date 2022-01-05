@@ -9,7 +9,8 @@ import right from "assets/right.svg";
 import { useDocumentTitle } from "utils";
 import { ErrorBox } from "components/lib";
 
-export const UnauthenticatedApp = () => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => {
   // isRegister 为 true 时，表示当前页面是注册页
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
