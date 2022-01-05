@@ -6,7 +6,7 @@ import { ButtonNoPadding } from "./lib";
 
 export const ProjectPopover = () => {
   const { open } = useProjectModal();
-  const { data: projects } = useProjects();
+  const { data: projects, refetch } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin);
 
   const content = (
@@ -29,7 +29,11 @@ export const ProjectPopover = () => {
   // Popover 气泡卡片: 点击/鼠标移入元素，弹出气泡式的卡片浮层。
   // placement: 气泡框位置，string, 默认 top
   return (
-    <Popover placement={"bottom"} content={content}>
+    <Popover
+      onVisibleChange={() => refetch()}
+      placement={"bottom"}
+      content={content}
+    >
       <span>项目</span>
     </Popover>
   );
