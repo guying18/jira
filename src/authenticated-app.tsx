@@ -6,7 +6,6 @@ import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
 import { resetRoute } from "utils";
 import { Route, Routes } from "react-router";
-import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
 import { ProjectModal } from "screens/project-list/project-modal";
 import { ProjectPopover } from "components/project-popover";
@@ -28,21 +27,16 @@ import { UserPopover } from "components/user-popover";
 export default function AuthenticatedApp() {
   return (
     <Container>
-      <Router>
-        <PageHeader />
-        <Main>
-          <Routes>
-            <Route path={"/projects"} element={<ProjectListScreen />} />
-            <Route
-              path={"/projects/:projectId/*"}
-              element={<ProjectScreen />}
-            />
-            {/* 默认路由 */}
-            <Route index element={<ProjectListScreen />} />
-          </Routes>
-        </Main>
-        <ProjectModal />
-      </Router>
+      <PageHeader />
+      <Main>
+        <Routes>
+          <Route path={"/projects"} element={<ProjectListScreen />} />
+          <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
+          {/* 默认路由 */}
+          <Route index element={<ProjectListScreen />} />
+        </Routes>
+      </Main>
+      <ProjectModal />
     </Container>
   );
 }

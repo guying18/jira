@@ -1,5 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { Project } from "types/project";
+import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import {
   useAddConfig,
@@ -13,7 +14,7 @@ export const useProjects = (param?: Partial<Project>) => {
   // 获取：useQuery({ queryKey, queryFn, config})
   // queryKey: 查询键，The query will automatically update when queryKey changes.
   // 可以通过给 useQuery 指定泛型来修改默认结果的数据类型。
-  return useQuery<Project[], Error>(["projects", param], () =>
+  return useQuery<Project[], Error>(["projects", cleanObject(param)], () =>
     client("projects", { data: param })
   );
 };

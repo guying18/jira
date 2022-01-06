@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Button, Drawer, Form, Input, Spin } from "antd";
-import { useForm } from "antd/lib/form/Form";
 import { ErrorBox } from "components/lib";
 import { UserSelect } from "components/user-select";
 import { useEffect } from "react";
@@ -17,7 +16,7 @@ export const ProjectModal = () => {
     isLoading: mutateLoading,
   } = useMutateProject(useProjectsQueryKey());
 
-  const [form] = useForm();
+  const [form] = Form.useForm();
   const onFinish = (values: any) => {
     mutateAsync({ ...editingProject, ...values }).then(() => {
       // resetFields: 重置一组字段到 initialValues
